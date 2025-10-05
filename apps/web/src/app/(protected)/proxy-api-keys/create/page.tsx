@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Create } from '@refinedev/antd';
-import { useForm } from '@refinedev/antd';
+import { Create, useForm } from '@refinedev/antd';
 import { useGetIdentity, useNotification } from '@refinedev/core';
 import {
     Card,
@@ -17,8 +16,9 @@ import {
     Button,
     Switch,
     Steps,
+    Space,
 } from 'antd';
-import { KeyOutlined, InfoCircleOutlined, SettingOutlined } from '@ant-design/icons';
+import { KeyOutlined, InfoCircleOutlined, SettingOutlined, CopyOutlined } from '@ant-design/icons';
 import type { TablesInsert, User } from '@gemini-proxy/database';
 
 const { Title, Paragraph } = Typography;
@@ -60,11 +60,31 @@ export default function ProxyApiKeyCreatePage() {
 
     const generateProxyApiKey = () => {
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = 'pk-';
-        for (let i = 0; i < 48; i++) {
+        let result = 'AIzaGPROXY_';
+        for (let i = 0; i < 28; i++) {
             result += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         formProps.form?.setFieldsValue({ proxy_key_value: result });
+    };
+
+    const copyToClipboard = async () => {
+        const keyValue = formProps.form?.getFieldValue('proxy_key_value');
+        if (keyValue) {
+            try {
+                await navigator.clipboard.writeText(keyValue);
+                notification.open({
+                    type: 'success',
+                    message: 'Copied to clipboard',
+                    description: 'API key has been copied to your clipboard.',
+                });
+            } catch (err) {
+                notification.open({
+                    type: 'error',
+                    message: 'Copy failed',
+                    description: 'Unable to copy to clipboard. Please copy manually.',
+                });
+            }
+        }
     };
 
     return (
@@ -123,18 +143,31 @@ export default function ProxyApiKeyCreatePage() {
                                 label="Proxy API Key Value"
                                 name="proxy_key_value"
                                 rules={[
-                                    { required: true, message: 'Please generate a proxy API key' },
+                                    {
+                                        required: true,
+                                        message: 'Please enter or generate a proxy API key',
+                                    },
                                 ]}
                             >
-                                <Input readOnly placeholder="Click generate to create a key" />
+                                <Input placeholder="Enter your API key or generate one below" />
                             </Form.Item>
-                            <Button
-                                icon={<KeyOutlined />}
-                                onClick={generateProxyApiKey}
-                                style={{ marginBottom: token.marginMD }}
-                            >
-                                Generate Secure Key
-                            </Button>
+
+                            <Space wrap>
+                                <Button
+                                    icon={<KeyOutlined />}
+                                    onClick={generateProxyApiKey}
+                                    style={{ marginBottom: token.marginMD }}
+                                >
+                                    Generate Secure Key
+                                </Button>
+                                <Button
+                                    icon={<CopyOutlined />}
+                                    onClick={copyToClipboard}
+                                    style={{ marginBottom: token.marginMD }}
+                                >
+                                    Copy to Clipboard
+                                </Button>
+                            </Space>
                             <Alert
                                 message="Please copy this key and store it securely. You will not be able to see it again."
                                 type="info"
