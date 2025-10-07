@@ -1,6 +1,5 @@
 import { Context } from 'hono';
 import { getRuntimeKey } from 'hono/adapter';
-import { waitUntil as vercelWaitUntil } from '@vercel/functions';
 
 /**
  * Execute operation with proper wait-until fallback handling
@@ -28,8 +27,10 @@ export async function executeWithWaitUntil(c: Context, operation: Promise<void>)
     }
 
     try {
+        // Keep dynamic import here to avoid build issue in Cloudflare Worker
+        const { waitUntil } = await import('@vercel/functions');
         // Try Vercel's waitUntil as fallback
-        vercelWaitUntil(operation);
+        waitUntil(operation);
         return;
     } catch (vercelError) {
         console.warn('Failed to use Vercel waitUntil:', vercelError);
