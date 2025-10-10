@@ -7,12 +7,13 @@ import { getRuntimeKey } from 'hono/adapter';
  */
 export async function executeWithWaitUntil(c: Context, operation: Promise<void>): Promise<void> {
     try {
-        // Try Hono's execution context first
-        const { waitUntil } = c.executionCtx || {};
-        if (waitUntil) {
-            waitUntil(operation);
-            return;
-        }
+        /**
+         * @see https://developers.cloudflare.com/workers/observability/errors/#illegal-invocation-errors
+         *
+         *  directly calling the method on ctx avoids the error
+         */
+        c?.executionCtx?.waitUntil(operation);
+        return;
     } catch (exCtxError) {
         if (
             exCtxError instanceof Error &&
