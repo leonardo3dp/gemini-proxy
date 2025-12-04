@@ -3,7 +3,7 @@
     "type": "module",
     "scripts": {
         "dev": "cross-env NODE_ENV=development NODE_OPTIONS=\"--no-deprecation\" API_PORT=9090 tsx watch --env-file .env src/index.ts",
-        "build": "tsup",
+        "build": "tsdown",
         "start": "cross-env NODE_ENV=production PORT=9091 node dist/index.js",
         "start:dev": "cross-env NODE_ENV=development API_PORT=9090 node dist/index.js"
     },
@@ -15,7 +15,7 @@
     "devDependencies": {
         "@types/node": "^20.11.17",
         "cross-env": "^7.0.3",
-        "tsup": "^8.5.0",
+        "tsdown": "^0.17.0",
         "tsx": "^4.7.1",
         "typescript": "^5.9.2"
     }

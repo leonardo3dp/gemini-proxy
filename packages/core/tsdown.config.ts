@@ -1,28 +1,31 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 export default defineConfig({
     entry: [
         'src/index.ts',
         'src/app.ts',
-        'src/types.ts',
+        'src/types/index.ts',
         'src/utils/index.ts',
         'src/utils/usage-metadata-parser.ts',
     ],
     format: ['esm'],
     dts: true,
-    splitting: false,
     sourcemap: true,
     clean: true,
     outDir: 'dist',
     target: 'es2020',
-    bundle: true,
+    unbundle: false,
     skipNodeModulesBundle: false,
     noExternal: [/^.*/],
     external: ['@vercel/functions'],
     platform: 'node',
     minify: false,
     tsconfig: './tsconfig.json',
-    esbuildOptions(options) {
-        options.mainFields = ['module', 'main'];
+    inputOptions(inputOptions) {
+        inputOptions.resolve = {
+            ...inputOptions.resolve,
+            mainFields: ['module', 'main'],
+        };
+        return inputOptions;
     },
 });

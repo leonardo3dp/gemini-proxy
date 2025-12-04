@@ -4,8 +4,8 @@
     "type": "module",
     "description": "Vercel proxy for Gemini Proxy service",
     "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
+        "build": "tsdown",
+        "dev": "tsdown --watch",
         "prepublishOnly": "pnpm build"
     },
     "license": "MIT",
@@ -27,7 +27,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.16",
-        "tsup": "^8.5.0",
+        "tsdown": "^0.17.0",
         "typescript": "^5.9.2"
     },
     "publishConfig": {

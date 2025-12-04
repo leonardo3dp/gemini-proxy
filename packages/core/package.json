@@ -4,8 +4,8 @@
     "type": "module",
     "description": "Core business logic for Gemini Proxy service - platform agnostic",
     "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
+        "build": "tsdown",
+        "dev": "tsdown --watch",
         "clean": "rm -rf dist"
     },
     "license": "MIT",
@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.16",
-        "tsup": "^8.5.0",
+        "tsdown": "^0.17.0",
         "typescript": "^5.9.2"
     }
 }

@@ -1,21 +1,24 @@
-import { defineConfig } from 'tsup';
+import { defineConfig } from 'tsdown';
 
 export default defineConfig({
     entry: ['src/index.ts', 'src/route.ts'],
     format: ['esm'],
     dts: true,
-    splitting: false,
     sourcemap: true,
     clean: true,
     outDir: 'dist',
     target: 'es2020',
-    bundle: false,
+    unbundle: true,
     skipNodeModulesBundle: true,
     noExternal: [],
     minify: false,
     tsconfig: './tsconfig.json',
     platform: 'node',
-    esbuildOptions(options) {
-        options.mainFields = ['module', 'main'];
+    inputOptions(inputOptions) {
+        inputOptions.resolve = {
+            ...inputOptions.resolve,
+            mainFields: ['module', 'main'],
+        };
+        return inputOptions;
     },
 });

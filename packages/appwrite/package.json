@@ -5,8 +5,8 @@
     "main": "dist/main.js",
     "type": "module",
     "scripts": {
-        "build": "tsup",
-        "dev": "tsup --watch",
+        "build": "tsdown",
+        "dev": "tsdown --watch",
         "clean": "rm -rf dist",
         "deploy": "pnpm run build && npx appwrite-cli push functions"
     },
@@ -22,7 +22,7 @@
     },
     "devDependencies": {
         "@types/node": "^20.11.16",
-        "tsup": "^8.5.0",
+        "tsdown": "^0.17.0",
         "typescript": "^5.9.2"
     }
 }

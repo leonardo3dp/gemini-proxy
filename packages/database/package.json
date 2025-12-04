@@ -24,7 +24,7 @@
     "homepage": "https://github.com/lehuygiang28/gemini-proxy",
     "license": "MIT",
     "scripts": {
-        "build": "tsup",
+        "build": "tsdown",
         "gen:types": "npx @dotenvx/dotenvx run -f ./.env -- node ./scripts/gen-types.mjs",
         "db:push": "npx @dotenvx/dotenvx run -f ./.env -- node ./scripts/db-push.mjs",
         "apply:stats": "npx @dotenvx/dotenvx run -f ./.env -- node ./scripts/apply-statistics-functions.mjs"
@@ -34,7 +34,7 @@
         "cross-env": "^7.0.3",
         "rimraf": "^6.0.1",
         "supabase": "^2.39.2",
-        "tsup": "^8.5.0",
+        "tsdown": "^0.17.0",
         "typescript": "^5.9.2"
     }
 }
